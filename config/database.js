@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Utils = require('../helper/utils');
 mongoose.Promise = require('bluebird');
-const mongoUrl = `mongodb+srv://minddeft:Yd$@f5dd5QNSX4Y@cluster0.jkyx3.mongodb.net/avangrat?retryWrites=true&w=majority`;
+const mongoUrl = `mongodb+srv://minddeft:Yd$@f5dd5QNSX4Y@cluster0.jkyx3.mongodb.net/fananywhere?retryWrites=true&w=majority`;
 
 mongoose
   .connect(
