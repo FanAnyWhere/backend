@@ -1,0 +1,339 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.main-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+}
+
+img.concept_logotype {
+  object-fit: contain;
+  position: relative;
+  top: 60px;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  font-family: "Sofia Pro", sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -2.29px;
+  color: #000;
+  top: -42px;
+  left: 220px;
+  width: calc(100% - 220px);
+}
+
+.bottom-container {
+  position: relative;
+  left: 220px;
+  top: 83px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: calc(100% - 220px);
+}
+img.fill-1 {
+  object-fit: contain;
+}
+
+form {
+  position: relative;
+  right: 220px;
+}
+
+.email-container {
+  position: relative;
+}
+.email-button {
+  position: absolute;
+  border: none;
+  width: 100px;
+  height: 44px;
+  padding: 13px 20px;
+  border-radius: 15px;
+  background-image: linear-gradient(to right, #d121d6 0%, #febf11 100%);
+  top: 14px;
+  right: 5px;
+}
+
+.button-title {
+  width: 60px;
+  height: 18px;
+  font-family: "Sofia Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+.email-input {
+  width: 100%;
+  height: 54px;
+  margin: 9px 0 0;
+  padding: 5px 125px 5px 15px;
+  border-radius: 20px;
+  border: solid 1px #ddd;
+  background-color: #fff;
+  outline: none;
+}
+
+.email-top-title {
+  width: 225px;
+  height: 19px;
+  font-family: "Sofia Pro", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.8px;
+  color: #8e9194;
+}
+
+input,
+input::placeholder {
+  font-family: "Sofia Pro", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.9px;
+  color: #000;
+}
+
+@media screen and (max-width: 860px) {
+  .content {
+    font-size: 40px;
+  }
+  .fill-1 {
+    display: none;
+  }
+
+  form {
+    right: 0px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  img.concept_logotype {
+    width: 84%;
+  }
+  .content {
+    width: 80%;
+    margin: 0 10%;
+    left: 0;
+    top: -32px;
+  }
+  .bottom-container {
+    width: 84%;
+    margin: 0 8%;
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .content {
+    width: 80%;
+    margin: 0 10%;
+    left: 0;
+    top: -20px;
+  }
+}
+
+@media screen and (min-width: 523px) and (max-width: 580px) {
+  .content {
+    font-size: 49px;
+  }
+}
+
+@media screen and (min-width: 474px) and (max-width: 522px) {
+  .content {
+    font-size: 44px;
+  }
+}
+
+@media screen and (max-width: 421px) {
+  .content {
+    font-size: 35px;
+    top: -5px;
+  }
+}
+
+@media screen and (min-width: 407px) and (max-width: 421px) {
+  .content {
+    font-size: 37px;
+  }
+}
+
+@media screen and (min-width: 361px) and (max-width: 370px) {
+  .content {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .content {
+    font-size: 32px;
+  }
+}
+
+@media screen and (max-width: 325px) {
+  .content {
+    font-size: 8vw;
+  }
+}
+
+@media screen and (min-width: 270px) and (max-width: 325px) {
+  .content {
+    font-size: 9vw;
+    top: 0px;
+    letter-spacing: -1.29px;
+  }
+}
+
+@media screen and (max-width: 307px) {
+  input::placeholder {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 269px) {
+  .content {
+    top: 12px;
+    letter-spacing: -0.29px;
+  }
+}
+
+@media screen and (max-width: 220px) {
+  .content {
+    top: 20px;
+  }
+}
+
+/* @media screen and (max-width: 860px) {
+    /* .concept_logotype {
+        width: 83%;
+    }
+
+    .content {
+        width: 84%;
+        margin: 0 8%;
+        left: inherit;
+        top: 170px;
+        font-size: 236%;
+        
+    } */
+
+/* .fill-1 {
+        display: none;
+    } */
+
+/* form {
+        right: 0px;
+    } */
+/* form {
+        width: 84%;
+        left: 8%;
+        top: 400px;
+        position: relative;
+    } */
+
+/* 
+@media screen and (max-width: 200px) {
+    
+};
+
+@media screen  and (min-width: 201px) and (max-width: 300px) {
+    .main-container {
+        position: relative;
+    }
+
+    form {
+        width: 80%;
+        margin: 0 10%;
+        left: 0;
+    }
+
+    .content {
+        font-size: 9vw;
+        letter-spacing: -0.29px;
+        top: 30px;
+    }
+
+    .concept_logotype {
+        width: 60%;
+    }
+
+    .email-top-title {
+        width: 100%;
+    }
+
+    .email-container{
+        width: 100%;
+    }
+
+    .email-input {
+        width: 100%;
+    }
+
+    .email-button {
+        right: 5px;
+        top: 14px;
+    }
+};
+
+@media screen  and (min-width: 200px) and (max-width: 300px) {
+    .main-container {
+        position: relative;
+    }
+
+    form {
+        width: 80%;
+        margin: 0 10%;
+        left: 0;
+    }
+
+    .content {
+        font-size: 9vw;
+        letter-spacing: -0.29px;
+        top: 30px;
+    }
+
+    .concept_logotype {
+        width: 60%;
+    }
+
+    .email-top-title {
+        width: 100%;
+    }
+
+    .email-container{
+        width: 100%;
+    }
+
+    .email-input {
+        width: 100%;
+    }
+
+    .email-button {
+        right: 5px;
+        top: 14px;
+    }
+} */
