@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const Utils = require('../helper/utils');
 mongoose.Promise = require('bluebird');
+const mongoUrl = `mongodb+srv://minddeft-user:9E*P&Uct@cluster-staging.mob9k.mongodb.net/fananywhere?retryWrites=true&w=majority`;
 
 mongoose
   .connect(
-    process.env.DATABASEURL,
+    // `mongodb://${process.env.DATABASEURL}:${process.env.DATABSEPORT}/${process.env.DATABASE}`,
+    mongoUrl,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
