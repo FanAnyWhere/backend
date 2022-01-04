@@ -6,6 +6,7 @@ NotificationCtr.addNewNotication = async (req, res) => {
     const addNewNotication = new NotificationModel({
       text: req.body.text,
       userId: req.body.userId,
+      notification_type: req.body.notification_type
     });
 
     await addNewNotication.save();

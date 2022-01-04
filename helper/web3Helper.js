@@ -359,8 +359,8 @@ async function orderEvent(result, order, transactionId, nonce) {
         +order['saleType'] === 0
           ? 'BUY'
           : +order['saleType'] === 1
-          ? 'AUCTION'
-          : 'SECOND_HAND';
+            ? 'AUCTION'
+            : 'SECOND_HAND';
 
       const checkIsBuy = +order['saleType'] === 2 ? true : false;
       const checkIsOffer = +order['saleType'] === 3 ? true : false;
@@ -461,6 +461,7 @@ async function orderEvent(result, order, transactionId, nonce) {
             },
             route: `/nftDetails/${getNftDetails._id}`,
             userId: previousOwner,
+            notification_type: 'sold_nft'
           });
 
           await addNewNotification.save();
@@ -472,6 +473,7 @@ async function orderEvent(result, order, transactionId, nonce) {
             },
             route: `/nftDetails/${getNftDetails._id}`,
             userId: getUserDetails._id,
+            notification_type: 'bought_nft'
           });
 
           await addNewNotificationForBuyer.save();
@@ -528,6 +530,7 @@ async function orderEvent(result, order, transactionId, nonce) {
             },
             route: `/nftDetails/${getNftDetails._id}`,
             userId: getNftDetails['ownerId'],
+            notification_type: 'sold_nft'
           });
 
           await addNewNotification.save();
@@ -539,6 +542,7 @@ async function orderEvent(result, order, transactionId, nonce) {
             },
             route: `/nftDetails/${getNftDetails._id}`,
             userId: getUserDetails._id,
+            notification_type: 'bought_nft'
           });
 
           await addNewNotificationForBuyer.save();
@@ -630,8 +634,8 @@ async function orderPlacedForSecondHand(result, order, transactionId, nonce) {
         +order['saleType'] === 0
           ? 'BUY'
           : +order['saleType'] === 1
-          ? 'AUCTION'
-          : 'SECOND_HAND';
+            ? 'AUCTION'
+            : 'SECOND_HAND';
 
       // console.log('sale Type is', +order['saleType']);
 

@@ -374,6 +374,7 @@ UserCtr.approveAsCreator = async (req, res) => {
                 : req.t('REQUSET_REJECTED_TR'),
             },
             userId: getUserDetails,
+            notification_type: 'user_as_creator'
           });
 
           addNewNotication.save();
