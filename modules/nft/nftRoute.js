@@ -45,7 +45,7 @@ const updateCollection = [
 nftRoute.put('/updateCollection/:id', updateCollection);
 
 // get list of collections for users
-const getList = [Auth.isAuthenticatedUser, NftCtr.getCollectionByUsers];
+const getList = [NftCtr.getCollectionByUsers];
 nftRoute.get('/listCollection', getList);
 
 // get user collection by user id

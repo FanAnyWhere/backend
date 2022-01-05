@@ -36,6 +36,10 @@ popularCollectionRoute.delete('/delete/:id', deletePopular);
 const listPopular = [Auth.checkIsAutheticated, PopularCollectionCtr.list];
 popularCollectionRoute.get('/list', listPopular);
 
+// Top collections
+const topCollections = [PopularCollectionCtr.topCollections];
+popularCollectionRoute.get('/topCollections', topCollections);
+
 // list popular for admin
 const listPopularforAdmin = [
   Auth.isAuthenticatedUser,

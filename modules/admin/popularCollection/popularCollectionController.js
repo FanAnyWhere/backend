@@ -235,4 +235,44 @@ PopularCollectionCtr.getPerticularNftDetails = async (req, res) => {
   }
 };
 
+// top collections
+PopularCollectionCtr.topCollections = async (req, res) => {
+  try {
+    const page = req.query.page || 1;
+
+    const totalCount = await PopularCollectionModel.countDocuments();
+    const pageCount = Math.ceil(totalCount / +process.env.LIMIT);
+
+    const listPopular = await PopularCollectionModel.find()
+      .populate({
+        path: 'collectionId',
+      })
+      .sort({
+        ranking: 1,
+      })
+      .skip((+page - 1 || 0) * +process.env.LIMIT)
+      .limit(+process.env.LIMIT);
+
+    return res.status(200).json({
+      message: req.t('POPULARLIST'),
+      status: true,
+      data: listPopular,
+      pagination: {
+        pageNo: page,
+        totalRecords: totalCount,
+        totalPages: pageCount,
+        limit: +process.env.LIMIT,
+      },
+    });
+  } catch (err) {
+    Utils.echoLog('error in  creating new banner ', err);
+    return res.status(500).json({
+      message: req.t('DB_ERROR'),
+      status: true,
+      err: err.message ? err.message : err,
+    });
+  }
+};
+
+
 module.exports = PopularCollectionCtr;
