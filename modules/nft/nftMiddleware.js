@@ -236,7 +236,7 @@ NftMiddleware.canAddNft = async (req, res, next) => {
   if (req.role === 'ADMIN') {
     return next();
   } else if (
-    req.role === 'CREATOR' &&
+    req.role === 'CELEBRITY' &&
     req.userData &&
     req.userData.acceptedByAdmin
   ) {

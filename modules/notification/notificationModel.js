@@ -19,6 +19,10 @@ const notificationSchema = new Schema(
       type: String,
       default: null,
     },
+    notification_type: {
+      type: String,
+      default: null,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'users',

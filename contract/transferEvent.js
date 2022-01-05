@@ -80,6 +80,7 @@ transferEvent.setTransferEvent = async (data, transactionHash) => {
           },
           userId: findUser._id,
           route: `/nftDetails/${findNft._id}`,
+          notification_type: 'transfer_nft'
         });
 
         await addNewNotification.save();
@@ -120,6 +121,7 @@ transferEvent.burn = async (data, transactionHash) => {
                 tu: `${findNft.title}  adlı NFT'nizi burn ettiniz.`,
               },
               userId: findEdition.ownerId,
+              notification_type: 'burned_nft'
             });
 
             await addNewNotification.save();
@@ -149,6 +151,7 @@ transferEvent.burn = async (data, transactionHash) => {
               tu: `${findNft.title}  adlı NFT'nizi burn ettiniz.`,
             },
             userId: getEdition.ownerId,
+            notification_type: 'burned_nft'
           });
 
           await addNewNotification.save();

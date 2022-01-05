@@ -8,6 +8,7 @@ NotificationMiddleware.addNewNotificationValidator = async (req, res, next) => {
   const schema = Joi.object({
     text: Joi.string().required(),
     userId: Joi.string(),
+    notification_type: Joi.string()
   });
   validate.validateRequest(req, res, next, schema);
 };

@@ -46,6 +46,7 @@ bidPlaced.checkBid = async (result, order) => {
             userId: checkBidAlreadyPlaced.userId,
             bidId: checkBidAlreadyPlaced._id,
             route: `/nftDetails/${fetchNftDetails._id}`,
+            notification_type: 'over_bid'
           });
 
           if (+order['saleType'] === 3) {
@@ -56,6 +57,7 @@ bidPlaced.checkBid = async (result, order) => {
               },
               userId: fetchSeller._id,
               route: `/nftDetails/${fetchNftDetails._id}`,
+              notification_type: 'new_offer_nft'
             });
 
             await notifySeller.save();
@@ -97,6 +99,7 @@ bidPlaced.checkBid = async (result, order) => {
             },
             userId: fetchSeller._id,
             route: `/nftDetails/${fetchNftDetails._id}`,
+            notification_type: 'new_offer_nft'
           });
 
           await notifySeller.save();
@@ -136,6 +139,7 @@ bidPlaced.checkBidEnded = async () => {
           },
           userId: fetchRecords[i].userId,
           route: `/nftDetails/${fetchRecords[i].nftId}`,
+          notification_type: 'bid_won'
         });
 
         // check edition added
