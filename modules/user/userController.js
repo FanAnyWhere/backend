@@ -67,7 +67,7 @@ UserCtr.updateUserDetails = async (req, res) => {
         fetchUserDetails.username = username;
       }
       if (isCreator) {
-        const fetchRole = await RoleModel.findOne({ roleName: 'CREATOR' });
+        const fetchRole = await RoleModel.findOne({ roleName: 'CELEBRITY' });
         fetchUserDetails.role = fetchRole._id;
       }
       if (category && category.length) {
@@ -343,7 +343,7 @@ UserCtr.approveAsCreator = async (req, res) => {
         const getUserDetails = await UserModel.findById(user[i].id);
         if (getUserDetails) {
           const getRoleDetails = await RoleModel.findOne({
-            roleName: 'CREATOR',
+            roleName: 'CELEBRITY',
           });
 
           const stage = {
@@ -436,7 +436,7 @@ UserCtr.addUserByAdmin = async (req, res) => {
   try {
     const { walletAddress, name, profile, bio, email, category, username } =
       req.body;
-    const fetchRole = await RoleModel.findOne({ roleName: 'CREATOR' });
+    const fetchRole = await RoleModel.findOne({ roleName: 'CELEBRITY' });
 
     const addNewUser = new UserModel({
       name: name,
@@ -511,7 +511,7 @@ UserCtr.genrateNonce = async (req, res) => {
 // seacrh creator
 UserCtr.searchCreator = async (req, res) => {
   try {
-    const fetchCreatorRoleId = await RoleModel.findOne({ roleName: 'CREATOR' });
+    const fetchCreatorRoleId = await RoleModel.findOne({ roleName: 'CELEBRITY' });
     const findUsers = await UserModel.find(
       {
         isActive: 1,
@@ -542,7 +542,7 @@ UserCtr.listActiveCreator = async (req, res) => {
   try {
     const page = req.body.page || 1;
     let sort = { createdAt: -1 };
-    const fetchCreatorRole = await RoleModel.findOne({ roleName: 'CREATOR' });
+    const fetchCreatorRole = await RoleModel.findOne({ roleName: 'CELEBRITY' });
     const query = {
       role: fetchCreatorRole._id,
       acceptedByAdmin: true,
@@ -698,7 +698,7 @@ UserCtr.updateUserDetailsByAdmin = async (req, res) => {
         fetchUserDetails.username = username;
       }
       if (isCreator) {
-        const fetchRole = await RoleModel.findOne({ roleName: 'CREATOR' });
+        const fetchRole = await RoleModel.findOne({ roleName: 'CELEBRITY' });
         fetchUserDetails.role = fetchRole._id;
       }
       if (category && category.length) {

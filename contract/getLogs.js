@@ -37,7 +37,7 @@ async function addLogs(transactionHash, nftId) {
       const getTransactionLogs = await axios(config);
 
       if (getTransactionLogs.status === 200) {
-        const getRole = await RoleModel.findOne({ roleName: 'CREATOR' });
+        const getRole = await RoleModel.findOne({ roleName: 'CELEBRITY' });
 
         if (+getTransactionLogs.data.status === 1) {
           const transactionData = getTransactionLogs.data.result;
@@ -48,7 +48,7 @@ async function addLogs(transactionHash, nftId) {
               if (
                 address &&
                 address.toLowerCase() !==
-                  process.env.ADMIN_WALLET_ADDRESS.toLowerCase()
+                process.env.ADMIN_WALLET_ADDRESS.toLowerCase()
               ) {
                 const getUser = await UserModel.findOne({
                   walletAddress: address.toLowerCase(),
