@@ -750,6 +750,106 @@ nftCtr.listCollectionNft = async (req, res) => {
   }
 };
 
+// live auctionmarket place api
+nftCtr.liveAuctionList = async (req, res) => {
+  try {
+    const page = req.body.page || 1;
+    let query = { isActive: true, status: statusObject.APPROVED };
+
+    if (req.body.category && req.body.category.length) {
+      query.category = { $in: req.body.category };
+    }
+
+    let filterQuery = [];
+    filterQuery.push({
+      saleState: 'AUCTION',
+      auctionEndDate: { $gte: Math.floor(Date.now() / 1000) },
+    })
+
+    // if (req.body.filter && req.body.filter.length) {
+    //   // query.saleState = { $in: req.body.filter };
+    //   let filterQuery = [];
+    //   for (let i = 0; i < req.body.filter.length; i++) {
+    //     if (req.body.filter[i] === 'BUYNOW') {
+    //       filterQuery.push({
+    //         $or: [
+    //           { auctionEndDate: { $lt: Math.floor(Date.now() / 1000) } },
+    //           { saleState: 'BUY' },
+    //         ],
+    //       });
+    //     }
+    //     if (req.body.filter[i] === 'AUCTION') {
+    //       filterQuery.push({
+    //         saleState: 'AUCTION',
+    //         auctionEndDate: { $gte: Math.floor(Date.now() / 1000) },
+    //       });
+    //     }
+
+    //     if (req.body.filter[i] === 'SOLD') {
+    //       filterQuery.push({ saleState: 'SOLD' });
+    //     }
+    //   }
+
+    //   const prevQuery = query;
+
+    //   query = {
+    //     $or: filterQuery,
+    //     ...prevQuery,
+    //   };
+    // }
+
+    if (req.body.search) {
+      query.title = {
+        $regex: `${req.body.search.toLowerCase()}.*`,
+        $options: 'i',
+      };
+    }
+
+    const totalCount = await NftModel.countDocuments(query);
+    const pageCount = Math.ceil(totalCount / +process.env.LIMIT);
+
+    const listNftForMarketPlace = await NftModel.find(query, {
+      approvedByAdmin: 0,
+      status: 0,
+      digitalKey: 0,
+    })
+      .populate({
+        path: 'ownerId',
+        select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+      })
+      .populate({
+        path: 'category',
+        select: { _id: 1, isActive: 1, image: 1 },
+      })
+      .populate({
+        path: 'collectionId',
+        select: { _id: 1, name: 1, description: 1 },
+      })
+      .skip((+page - 1 || 0) * +process.env.LIMIT)
+      .sort({ updatedAt: -1 })
+      .limit(+process.env.LIMIT);
+
+    return res.status(200).json({
+      message: 'NFT_MARKET_PLACE_LIST',
+      status: true,
+      data: listNftForMarketPlace,
+      pagination: {
+        pageNo: page,
+        totalRecords: totalCount,
+        totalPages: pageCount,
+        limit: +process.env.LIMIT,
+      },
+    });
+  } catch (err) {
+    Utils.echoLog(`Error inlist nft for market place`);
+    return res.status(500).json({
+      message: req.t('DB_ERROR'),
+      status: false,
+      err: err.message ? err.message : err,
+    });
+  }
+};
+
 // market place api
 nftCtr.marketPlace = async (req, res) => {
   try {

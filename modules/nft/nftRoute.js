@@ -144,4 +144,8 @@ const editionSell = [
 ];
 nftRoute.post('/addToSecondHand', editionSell);
 
+// live auction marketplace nft list
+const liveAuctionList = [NftCtr.liveAuctionList];
+nftRoute.get('/liveAuctionList', liveAuctionList);
+
 module.exports = nftRoute;
