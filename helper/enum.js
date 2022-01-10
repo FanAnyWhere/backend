@@ -1,4 +1,4 @@
-exports.roles = ["CREATOR", "COLLECTOR"];
+exports.roles = ["CELEBRITY", "COLLECTOR"];
 exports.status = ["PENDING", "APPROVED", "REJECTED"];
 exports.nftStatus = ["PENDING", "APPROVED", "REJECTED", "NOT_MINTED"];
 exports.statusObject = {
