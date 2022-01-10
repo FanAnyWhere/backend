@@ -235,7 +235,7 @@ nftCtr.getCollectionByUsers = async (req, res) => {
     )
       .populate({
         path: 'ownerId',
-        select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+        select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
       })
       .populate({
         path: 'category',
@@ -295,7 +295,7 @@ nftCtr.getListOfCollectionForAdmin = async (req, res) => {
     })
       .populate({
         path: 'ownerId',
-        select: { _id: 1, walletAddress: 1 },
+        select: { _id: 1, walletAddress: 1 , name: 1},
       })
       .populate({
         path: 'category',
@@ -450,7 +450,7 @@ nftCtr.listUsersNft = async (req, res) => {
       })
       .populate({
         path: 'ownerId',
-        select: { name: 1, username: 1, profile: 1 },
+        select: { name: 1, username: 1, profile: 1, name: 1 },
       })
       .sort({ createdAt: -1 });
 
@@ -498,7 +498,7 @@ nftCtr.listNftForAdmin = async (req, res) => {
       })
       .populate({
         path: 'ownerId',
-        select: { name: 1, username: 1 },
+        select: { name: 1, username: 1, name: 1 },
       })
       .sort({ createdAt: -1 })
       .skip((+page - 1 || 0) * +process.env.LIMIT)
@@ -815,7 +815,7 @@ nftCtr.liveAuctionList = async (req, res) => {
     })
       .populate({
         path: 'ownerId',
-        select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+        select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
       })
       .populate({
         path: 'category',
@@ -909,7 +909,7 @@ nftCtr.marketPlace = async (req, res) => {
     })
       .populate({
         path: 'ownerId',
-        select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+        select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
       })
       .populate({
         path: 'category',
@@ -966,7 +966,7 @@ nftCtr.getCollectionsList = async (req, res) => {
     const getCollections = await CollectionModel.find(query)
       .populate({
         path: 'ownerId',
-        select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+        select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
       })
       .populate({
         path: 'category',
@@ -1008,7 +1008,7 @@ nftCtr.getNftHistory = async (req, res) => {
       editionNo: null,
     }).populate({
       path: 'ownerId',
-      select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+      select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
     });
 
     const fetchNftHistory = JSON.parse(
@@ -1019,7 +1019,7 @@ nftCtr.getNftHistory = async (req, res) => {
         })
           .populate({
             path: 'ownerId',
-            select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+            select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
           })
           .sort({ createdAt: 1 })
       )

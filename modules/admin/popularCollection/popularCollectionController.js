@@ -115,7 +115,7 @@ PopularCollectionCtr.list = async (req, res) => {
             populate: [
               {
                 path: 'ownerId',
-                select: { _id: 1, walletAddress: 1, username: 1, profile: 1 },
+                select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
                 model: 'users',
               },
             ],
