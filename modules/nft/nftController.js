@@ -855,9 +855,14 @@ nftCtr.marketPlace = async (req, res) => {
   try {
     const page = req.body.page || 1;
     let query = { isActive: true, status: statusObject.APPROVED };
+    let sort = { updatedAt: -1 };
 
     if (req.body.category && req.body.category.length) {
       query.category = { $in: req.body.category };
+    }
+
+    if (req.body.collection && req.body.collection.length) {
+      query.collectionId = req.body.collection
     }
 
     if (req.body.filter && req.body.filter.length) {
@@ -867,7 +872,7 @@ nftCtr.marketPlace = async (req, res) => {
         if (req.body.filter[i] === 'BUYNOW') {
           filterQuery.push({
             $or: [
-              { auctionEndDate: { $lt: Math.floor(Date.now() / 1000) } },
+              { auctionEndDate: { $gt: Math.floor(Date.now() / 1000) } },
               { saleState: 'BUY' },
             ],
           });
@@ -875,7 +880,7 @@ nftCtr.marketPlace = async (req, res) => {
         if (req.body.filter[i] === 'AUCTION') {
           filterQuery.push({
             saleState: 'AUCTION',
-            auctionEndDate: { $gte: Math.floor(Date.now() / 1000) },
+            auctionEndDate: { $lte: Math.floor(Date.now() / 1000) },
           });
         }
 
@@ -884,12 +889,22 @@ nftCtr.marketPlace = async (req, res) => {
         }
       }
 
-      const prevQuery = query;
+      let sortQuery = {};
+      if (req.body.filter ) {
+        if (req.body.filter === 'lowToHigh') {
+          sortQuery.price = -1
+        }
 
-      query = {
-        $or: filterQuery,
-        ...prevQuery,
-      };
+        if (req.body.filter === 'highToLow') {
+          sortQuery.price = 1
+        }
+      }
+
+      const prevQuery = query;
+      
+      if (filterQuery.length) query = { $or: filterQuery, ...prevQuery, };
+      if (sortQuery) sort = sortQuery
+
     }
 
     if (req.body.search) {
@@ -920,7 +935,7 @@ nftCtr.marketPlace = async (req, res) => {
         select: { _id: 1, name: 1, description: 1 },
       })
       .skip((+page - 1 || 0) * +process.env.LIMIT)
-      .sort({ updatedAt: -1 })
+      .sort(sort)
       .limit(+process.env.LIMIT);
 
     return res.status(200).json({
