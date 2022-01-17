@@ -862,7 +862,8 @@ nftCtr.marketPlace = async (req, res) => {
     }
 
     if (req.body.collection && req.body.collection.length) {
-      query.collectionId = req.body.collection
+      // query.collectionId = req.body.collection
+      query.collectionId = { $in: req.body.collection };
     }
 
     if (req.body.filter && req.body.filter.length) {
