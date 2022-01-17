@@ -4,7 +4,7 @@ const BidHelper = require('../contract/bidPlaced');
 
 const cron = require('node-cron');
 
-cron.schedule('* * * * *', (req, res) => {
+cron.schedule('*/5 * * * *', (req, res) => {
   Web3Helper.getTransferEvent(req, res);
   Web3Helper.getPastEvents(req, res);
   Web3Helper.orderBuyedEvent(req, res);
