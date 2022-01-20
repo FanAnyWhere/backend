@@ -103,7 +103,6 @@ PopularNftCtr.delete = async (req, res) => {
 };
 
 // list popular nft for users
-
 PopularNftCtr.list = async (req, res) => {
   try {
     const listPopular = JSON.parse(

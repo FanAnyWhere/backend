@@ -5,6 +5,7 @@ const Utils = require('../../helper/utils');
 const EditionModel = require('../edition/editonModel');
 const HistoryModel = require('../history/historyModel');
 // const EditionModel = require('../edition/editonModel');
+const PopularNftModel = require('../admin/popular-nft/popularNftModel')
 const { statusObject } = require('../../helper/enum');
 const { query } = require('winston');
 const { filter } = require('bluebird');
@@ -941,7 +942,8 @@ nftCtr.marketPlace = async (req, res) => {
 
     const nftList = await Promise.all(listNftForMarketPlace.map( async (nft) => ({ 
         ...nft._doc, 
-        likes: await LikeModel.countDocuments({ nftId: nft.id })
+        likes: await LikeModel.countDocuments({ nftId: nft.id }),
+        popular: await PopularNftModel.countDocuments({ nftId: nft._id })
       })))
 
     return res.status(200).json({
@@ -1168,7 +1170,8 @@ nftCtr.getUserBuyedNfts = async (req, res) => {
       
       const nftList = await Promise.all(fetchUserNft.map( async (nft) => ({ 
           ...nft._doc, 
-          buyEdition: await EditionModel.countDocuments({ ownerId:req.params.userId, nftId: nft.id })
+          buyEdition: await EditionModel.countDocuments({ ownerId:req.params.userId, nftId: nft.id }),
+          buyEditions: await EditionModel.find({ ownerId:req.params.userId, nftId: nft.id }),
         })))
       
       return res.status(200).json({
