@@ -215,7 +215,7 @@ async function checkMinting(result, order, nonce, transactionhash) {
                 nftId: saveNft._id,
                 editionNo: null,
                 ownerId: findUser._id,
-                text: 'NFT minted ',
+                text: 'Minted by ',
                 buyPrice: saveNft.price,
                 timeline: Math.floor(Date.now() / 1000),
               });
@@ -443,7 +443,7 @@ async function orderEvent(result, order, transactionId, nonce) {
               nftId: getNftDetails._id,
               editionNo: +result['editionNumber'],
               ownerId: getUserDetails._id,
-              text: 'NFT bought',
+              text: '1 edition bought by ',
               buyPrice: Utils.convertToEther(+order['pricePerNFT']),
               timeline: order['timeline'],
             });
@@ -504,7 +504,7 @@ async function orderEvent(result, order, transactionId, nonce) {
             nftId: getNftDetails._id,
             editionNo: +result['editionNumber'],
             ownerId: getUserDetails._id,
-            text: 'NFT bought',
+            text: '1 edition bought by ',
             buyPrice: Utils.convertToEther(+order['pricePerNFT']),
             timeline: order['timeline'],
           });

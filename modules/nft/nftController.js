@@ -939,10 +939,15 @@ nftCtr.marketPlace = async (req, res) => {
       .sort(sort)
       .limit(+process.env.LIMIT);
 
+    const nftList = await Promise.all(listNftForMarketPlace.map( async (nft) => ({ 
+        ...nft._doc, 
+        likes: await LikeModel.countDocuments({ nftId: nft.id })
+      })))
+
     return res.status(200).json({
       message: 'NFT_MARKET_PLACE_LIST',
       status: true,
-      data: listNftForMarketPlace,
+      data: nftList,
       pagination: {
         pageNo: page,
         totalRecords: totalCount,
@@ -1018,6 +1023,11 @@ nftCtr.getNftHistory = async (req, res) => {
   try {
     const id = req.params.nftId;
     // const edition = req.params.edition;
+    const nft = await NftModel.findOne({ _id: id })
+    var nftEditions = []
+    for (i = 1; i <= nft.edition; i++) {
+      nftEditions.push(i)
+    }
 
     const fetchNftCreated = await HistoryModel.findOne({
       nftId: id,
@@ -1027,28 +1037,31 @@ nftCtr.getNftHistory = async (req, res) => {
       select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
     });
 
-    // const fetchNftHistory = JSON.parse(
-    //   JSON.stringify(
-    //     await HistoryModel.find({
-    //       nftId,
-    //       editionNo: edition,
-    //     })
-    //       .populate({
-    //         path: 'ownerId',
-    //         select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
-    //       })
-    //       .sort({ createdAt: 1 })
-    //   )
-    // );
-    // if (fetchNftCreated) {
-    //   fetchNftHistory.unshift(fetchNftCreated);
-    // }
+    const fetchNftHistory = JSON.parse(
+      JSON.stringify(
+        await HistoryModel.find({
+          nftId: id,
+          editionNo:  { $in: nftEditions } ,
+        })
+          .populate({
+            path: 'ownerId',
+            select: { _id: 1, walletAddress: 1, username: 1, profile: 1, name: 1 },
+          })
+          .sort({ createdAt: -1 })
+      )
+    );
+
+    var result;
+    if (fetchNftCreated) {
+      result = fetchNftHistory.concat(fetchNftCreated);
+    } else {
+      result = fetchNftCreated
+    }
 
     return res.status(200).json({
       message: req.t('NFT_HISTORY'),
       status: true,
-      // data: fetchNftHistory,
-      data: fetchNftCreated,
+      data: result,
     });
   } catch (err) {
     Utils.echoLog(`Error inlist nft for market place`);
@@ -1152,11 +1165,16 @@ nftCtr.getUserBuyedNfts = async (req, res) => {
           path: 'ownerId',
           select: { name: 1, username: 1, profile: 1, name: 1 },
         });
-
+      
+      const nftList = await Promise.all(fetchUserNft.map( async (nft) => ({ 
+          ...nft._doc, 
+          buyEdition: await EditionModel.countDocuments({ ownerId:req.params.userId, nftId: nft.id })
+        })))
+      
       return res.status(200).json({
         message: 'USER_OWNED_NFT',
         status: true,
-        data: fetchUserNft,
+        data: nftList,
       });
     } else {
       return res.status(200).json({
