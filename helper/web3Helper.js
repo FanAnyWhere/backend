@@ -48,7 +48,7 @@ const provider =
     : 'https://rpc-mumbai.maticvigil.com/';
 
 const getWeb3Event = {};
-let lastReadBlock = 23835072;
+let lastReadBlock = 24113439;
 
 getWeb3Event.getTransferEvent = async (req, res) => {
   try {
