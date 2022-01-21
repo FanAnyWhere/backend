@@ -203,6 +203,8 @@ async function checkMinting(result, order, nonce, transactionhash) {
             if (+order.saleType === 1) {
               findNft.auctionStartDate = result.timestamp;
               findNft.auctionEndDate = order.timeline;
+            } else {
+              findNft.auctionStartDate = order.timeline;
             }
             const saveNft = await findNft.save();
 
