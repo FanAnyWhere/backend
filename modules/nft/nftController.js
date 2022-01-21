@@ -454,11 +454,17 @@ nftCtr.listUsersNft = async (req, res) => {
         select: { name: 1, username: 1, profile: 1, name: 1 },
       })
       .sort({ createdAt: -1 });
+    
+    const nftList = await Promise.all(list.map( async (nft) => ({ 
+        ...nft._doc, 
+        likes: await LikeModel.countDocuments({ nftId: nft.id }),
+        popular: await PopularNftModel.countDocuments({ nftId: nft._id })
+      })))
 
     return res.status(200).json({
       message: req.t('USER_NFT_LIST'),
       status: true,
-      data: list,
+      data: nftList,
     });
   } catch (err) {
     Utils.echoLog('error in listing user  nft  ', err);
@@ -559,7 +565,7 @@ nftCtr.getSingleNftDetails = async (req, res) => {
         select: { name: 1, username: 1, profile: 1, name: 1 },
       })
       .sort({
-        edition: 1,
+        updatedAt: -1
       });
 
     getNftDetails.editions = getEditionDetails;
@@ -830,10 +836,16 @@ nftCtr.liveAuctionList = async (req, res) => {
       .sort({ updatedAt: -1 })
       .limit(+process.env.LIMIT);
 
+    const nftList = await Promise.all(listNftForMarketPlace.map( async (nft) => ({ 
+        ...nft._doc, 
+        likes: await LikeModel.countDocuments({ nftId: nft.id }),
+        popular: await PopularNftModel.countDocuments({ nftId: nft._id })
+      })))
+
     return res.status(200).json({
       message: 'NFT_MARKET_PLACE_LIST',
       status: true,
-      data: listNftForMarketPlace,
+      data: nftList,
       pagination: {
         pageNo: page,
         totalRecords: totalCount,
@@ -1108,11 +1120,17 @@ nftCtr.getLikedNfts = async (req, res) => {
           path: 'ownerId',
           select: { name: 1, username: 1, profile: 1, name: 1 },
         });
+      
+      const nftList = await Promise.all(nfts.map( async (nft) => ({ 
+          ...nft._doc, 
+          likes: await LikeModel.countDocuments({ nftId: nft.id }),
+          popular: await PopularNftModel.countDocuments({ nftId: nft._id })
+        })))
 
       return res.status(200).json({
         message: 'LIKED_NFT',
         status: true,
-        data: nfts,
+        data: nftList,
       });
     } else {
       return res.status(200).json({
@@ -1172,6 +1190,7 @@ nftCtr.getUserBuyedNfts = async (req, res) => {
           ...nft._doc, 
           buyEdition: await EditionModel.countDocuments({ ownerId:req.params.userId, nftId: nft.id }),
           buyEditions: await EditionModel.find({ ownerId:req.params.userId, nftId: nft.id }),
+          likes: await LikeModel.countDocuments({ nftId: nft.id }),
         })))
       
       return res.status(200).json({
