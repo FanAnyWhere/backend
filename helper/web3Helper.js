@@ -69,6 +69,30 @@ getWeb3Event.getTransferEvent = async (req, res) => {
       process.env.ESCROW_ADDRESS
     );
     console.log("-----------------------here-all-listening-started-----------------------------------")
+
+    contract.events.allEvents((error, result) => {
+      console.log(result)
+      if (!error) {
+
+        // setInterval(()=>{
+        //   web3JSConnection.
+        // },5000)
+
+        if (result.event === "OrderPlaced") {
+          console.log("-------------------------------OrderPlaced-event-received------------------------------------")
+        } else if (result.event === "OrderBought") {
+          console.log("-------------------------------OrderBought-event-received------------------------------------")
+        } else if (result.event === "EditionTransferred") {
+          console.log("-------------------------------EditionTransferred-event-received------------------------------------")
+        } else if (result.event === "OrderCancelled") {
+          console.log("-------------------------------OrderCancelled-event-received------------------------------------")
+        } else if (result.event === "BidPlaced") {
+          console.log("-------------------------------BidPlaced-event-received------------------------------------")
+        }
+      } else
+        console.log(error)
+    })
+
     contract.events
       .OrderPlaced({
         // filter: {
