@@ -67,30 +67,6 @@ getWeb3Event.getTransferEvent = async (req, res) => {
       ContractAbi,
       process.env.ESCROW_ADDRESS
     );
-    console.log("-----------------------here-all-listening-started-----------------------------------")
-
-    contract.events.allEvents((error, result) => {
-      console.log(result)
-      if (!error) {
-
-        // setInterval(()=>{
-        //   web3JSConnection.
-        // },5000)
-
-        if (result.event === "OrderPlaced") {
-          console.log("-------------------------------OrderPlaced-event-received------------------------------------")
-        } else if (result.event === "OrderBought") {
-          console.log("-------------------------------OrderBought-event-received------------------------------------")
-        } else if (result.event === "EditionTransferred") {
-          console.log("-------------------------------EditionTransferred-event-received------------------------------------")
-        } else if (result.event === "OrderCancelled") {
-          console.log("-------------------------------OrderCancelled-event-received------------------------------------")
-        } else if (result.event === "BidPlaced") {
-          console.log("-------------------------------BidPlaced-event-received------------------------------------")
-        }
-      } else
-        console.log(error)
-    })
 
     contract.events
       .OrderPlaced({
@@ -101,7 +77,6 @@ getWeb3Event.getTransferEvent = async (req, res) => {
         fromBlock: 'latest',
       })
       .on('data', async (getPastEvents) => {
-        console.log("------------------listening-Orderplace-event-------------------------")
         const nonce = getPastEvents.returnValues.nonce;
         const result = getPastEvents.returnValues;
         const order = result['order'];
@@ -116,7 +91,6 @@ getWeb3Event.getTransferEvent = async (req, res) => {
 
       })
       .on('data', async (getPastEvents) => {
-        console.log("------------------listening-OrderBought-event-------------------------")
         const result = getPastEvents.returnValues;
         const order = result['order'];
         const transactionHash = getPastEvents.transactionHash;
@@ -130,7 +104,6 @@ getWeb3Event.getTransferEvent = async (req, res) => {
         fromBlock: 'latest',
       })
       .on('data', async (transferred) => {
-        console.log("------------------listening-EditionTransferred-event-------------------------")
         const result = transferred.returnValues;
         const transactionhash = transferred.transactionHash;
         await TransferredEvent(transactionhash, result);
@@ -142,7 +115,6 @@ getWeb3Event.getTransferEvent = async (req, res) => {
         fromBlock: 'latest',
       })
       .on('data', async (cancelledEvent) => {
-        console.log("------------------listening-OrderCancelled-event-------------------------")
         const editionNo = cancelledEvent.returnValues.editionNumber;
         const tokenId = cancelledEvent.returnValues.order['tokenId'];
         const transactionHash = cancelledEvent.transactionHash;
@@ -160,7 +132,6 @@ getWeb3Event.getTransferEvent = async (req, res) => {
         fromBlock: 'latest',
       })
       .on('data', async (bids) => {
-        console.log("------------------listening-BidPlaced-event-------------------------")
         // console.log('bid is:', bids);
         const result = bids.returnValues;
         const order = result['order'];
