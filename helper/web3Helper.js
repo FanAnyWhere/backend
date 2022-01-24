@@ -56,8 +56,7 @@ getWeb3Event.getTransferEvent = async (req, res) => {
     const web3 = new Web3(
       new Web3(
         new Web3.providers.WebsocketProvider(
-          'wss://speedy-nodes-nyc.moralis.io/99b46be4728d3ba4bcc6cbb2/polygon/mumbai/archive/ws',
-          options
+          'wss://speedy-nodes-nyc.moralis.io/99b46be4728d3ba4bcc6cbb2/polygon/mumbai/archive/ws'
         )
       )
     );
