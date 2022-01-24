@@ -68,16 +68,17 @@ getWeb3Event.getTransferEvent = async (req, res) => {
       ContractAbi,
       process.env.ESCROW_ADDRESS
     );
-
+    console.log("-----------------------here-all-listening-started-----------------------------------")
     contract.events
       .OrderPlaced({
         // filter: {
         //   from: '0x0000000000000000000000000000000000000000', //,
         //   // to: "0x8c8Ea652DE618a30348dCce6df70C8d2925E6814"
         // },
-        fromBlock: lastReadBlock,
+        fromBlock: 'latest',
       })
       .on('data', async (getPastEvents) => {
+        console.log("------------------listening-Orderplace-event-------------------------")
         const nonce = getPastEvents.returnValues.nonce;
         const result = getPastEvents.returnValues;
         const order = result['order'];
@@ -88,10 +89,11 @@ getWeb3Event.getTransferEvent = async (req, res) => {
     // // order bought events
     contract.events
       .OrderBought({
-        fromBlock: lastReadBlock,
+        fromBlock: 'latest',
 
       })
       .on('data', async (getPastEvents) => {
+        console.log("------------------listening-OrderBought-event-------------------------")
         const result = getPastEvents.returnValues;
         const order = result['order'];
         const transactionHash = getPastEvents.transactionHash;
@@ -102,9 +104,10 @@ getWeb3Event.getTransferEvent = async (req, res) => {
     //edition transferred events
     contract.events
       .EditionTransferred({
-        fromBlock: lastReadBlock,
+        fromBlock: 'latest',
       })
       .on('data', async (transferred) => {
+        console.log("------------------listening-EditionTransferred-event-------------------------")
         const result = transferred.returnValues;
         const transactionhash = transferred.transactionHash;
         await TransferredEvent(transactionhash, result);
@@ -113,9 +116,10 @@ getWeb3Event.getTransferEvent = async (req, res) => {
     // order cancelled events
     contract.events
       .OrderCancelled({
-        fromBlock: lastReadBlock,
+        fromBlock: 'latest',
       })
       .on('data', async (cancelledEvent) => {
+        console.log("------------------listening-OrderCancelled-event-------------------------")
         const editionNo = cancelledEvent.returnValues.editionNumber;
         const tokenId = cancelledEvent.returnValues.order['tokenId'];
         const transactionHash = cancelledEvent.transactionHash;
@@ -130,9 +134,10 @@ getWeb3Event.getTransferEvent = async (req, res) => {
     // bid placed events
     contract.events
       .BidPlaced({
-        fromBlock: lastReadBlock,
+        fromBlock: 'latest',
       })
       .on('data', async (bids) => {
+        console.log("------------------listening-BidPlaced-event-------------------------")
         // console.log('bid is:', bids);
         const result = bids.returnValues;
         const order = result['order'];
@@ -140,7 +145,7 @@ getWeb3Event.getTransferEvent = async (req, res) => {
         await bidPlaced.checkBid(result, order);
       });
 
-    lastReadBlock = await web3.eth.getBlockNumber();
+    // lastReadBlock = await web3.eth.getBlockNumber();
   } catch (err) {
     Utils.echoLog(`Error in web3 listner for mint :${err}`);
   }
