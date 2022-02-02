@@ -457,7 +457,7 @@ async function orderEvent(result, order, transactionId, nonce) {
 
           const addNewNotification = await new NotificationModel({
             text: {
-              en: `Your Nft named ${getNftDetails.title}for edition ${+result[
+              en: `Your Nft named ${getNftDetails.title} for edition ${+result[
                 'editionNumber'
               ]} is sold `,
 
@@ -527,7 +527,7 @@ async function orderEvent(result, order, transactionId, nonce) {
 
           const addNewNotification = await new NotificationModel({
             text: {
-              en: `Your Nft named ${getNftDetails.title}for edition ${+result[
+              en: `Your Nft named ${getNftDetails.title} for edition ${+result[
                 'editionNumber'
               ]} is sold`,
 
