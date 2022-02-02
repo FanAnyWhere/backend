@@ -219,6 +219,7 @@ async function checkMinting(result, order, nonce, transactionhash) {
                 text: 'Minted by ',
                 buyPrice: saveNft.price,
                 timeline: Math.floor(Date.now() / 1000),
+                transactionId: transactionhash
               });
 
               addNewHistory.save();
@@ -447,6 +448,7 @@ async function orderEvent(result, order, transactionId, nonce) {
               text: '1 edition bought by ',
               buyPrice: Utils.convertToEther(+order['pricePerNFT']),
               timeline: order['timeline'],
+              transactionId: transactionId
             });
 
             await addNewHistory.save();
@@ -508,6 +510,7 @@ async function orderEvent(result, order, transactionId, nonce) {
             text: '1 edition bought by ',
             buyPrice: Utils.convertToEther(+order['pricePerNFT']),
             timeline: order['timeline'],
+            transactionId: transactionId
           });
 
           await addNewEdition.save();
